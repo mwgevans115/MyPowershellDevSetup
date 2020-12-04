@@ -78,8 +78,8 @@ Set-Variable -Name vscodeSettings -Option Constant -Description 'VS code setting
 }
 
 '@
-Set-Variable -Name vsSettingsPath -Option Constant -Description 'VS Code Settigs file Path' `
-    -Value = Join-Path $env:APPDATA "Code\User\settings.json"
+Set-Variable -Name 'vsSettingsPath' -Option Constant -Description 'VS Code Settigs file Path' `
+    -Value Join-Path $env:APPDATA "Code\User\settings.json"
 #
 
 # ------------------------------ Helper Functions -----------------------------
