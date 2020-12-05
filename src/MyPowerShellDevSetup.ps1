@@ -38,7 +38,7 @@ $StopWatch = [ordered]@{
 # ------------------------------ Static Variables -----------------------------
 
 #
-Set-Variable -Name vscodeSettings -Option Constant -Description 'VS code settings file' `
+Set-Variable -Name vscodeSettings -Option Constant -Description 'VS code settings file' -Scope Private `
     -Value @'
 {
     // telemetry
@@ -78,8 +78,15 @@ Set-Variable -Name vscodeSettings -Option Constant -Description 'VS code setting
 }
 
 '@
-Set-Variable -Name 'vsSettingsPath' -Option Constant -Description 'VS Code Settigs file Path' `
+Set-Variable -Name 'vsSettingsPath' -Option Constant -Description 'VS Code Settigs file Path' -Scope Private `
     -Value (Join-Path -Path $env:APPDATA -ChildPath "Code\User\settings.json")
+Set-Variable -Name 'GitPath' -Option Constant -Description 'Git file Path' -Scope Private `
+    -Value (Join-Path -Path $env:ProgramFiles -ChildPath "git\cmd\git.exe")
+Set-Variable -Name 'PowershellArgs' -Option Constant -Description 'Arguments to start powershell with' -Scope Private `
+    -Value @('-NoExit', '-ExecutionPolicy Bypass', '-NoProfile')
+
+
+
 #
 
 # ------------------------------ Helper Functions -----------------------------
@@ -103,15 +110,15 @@ $StopWatch.ScriptLogic = [System.Diagnostics.Stopwatch]::StartNew()
 # <- LOGIC HERE ->
 #
 Install-PackageProvider -Name NuGet -Force -Scope CurrentUser
-Install-Module –Name PowerShellGet –Force -AllowClobber -Scope CurrentUser
+Install-Module -Name PowerShellGet –Force -AllowClobber -Scope CurrentUser
 Install-Script Install-Git, Install-VSCode, Install-Hub -Force -Scope CurrentUser
-Install-Git
+Start-Process powershell -ArgumentList ($PowershellArgs + '-Command Install-Git.ps1') -Verb RunAs
 Install-Module -Name Posh-Git -Force -Scope CurrentUser
 Add-PoshGitToProfile -AllHostsc
-Install-Hub
+Start-Process powershell -ArgumentList ($PowershellArgs + '-Command Install-Hub.ps1') -Verb RunAs
 # indicate that you prefer HTTPS to SSH git clone URLs
-#git config --global hub.protocol https
-& "c:\program files\git\cmd\git" config --global hub.protocol https
+& "$GitPath" config --global hub.protocol https
+
 Install-VSCode -EnableContextMenus
 New-Item $vsSettingsPath -ItemType File -Force
 Set-Content -Path $vsSettingsPath -Value $vsCodeSettings
