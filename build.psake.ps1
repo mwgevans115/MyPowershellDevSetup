@@ -274,6 +274,20 @@ Task Test -depends Build -requiredVariables TestRootDir, ScriptName, CodeCoverag
 Task Publish -depends Build, Test, BeforePublish, CorePublish, AfterPublish {
 }
 
+Task Release -depends Build, Test, BeforeRelease, CoreRelease, AfterRelease {
+}
+
+Task CoreRelease -requiredVariables ScriptOutDir {
+    $ScriptFileName = Split-Path $ScriptOutDir -Leaf
+    $Version = (Test-ScriptFileInfo -Path (Join-Path $ScriptOutDir "$ScriptFileName.ps1")).Version
+    if ($Version) {
+        Compress-Archive -Path $ScriptOutDir -DestinationPath "$ScriptOutDir $Version.zip"
+        git tag "$Version"
+        git push origin --tags
+        hub release create -a "$ScriptOutDir $Version.zip" -m "Realease Version $Version" "$Version"
+    }
+}
+
 Task CorePublish -requiredVariables SettingsPath, ScriptOutDir {
     # Publishing to the PSGallery requires an API key, so get it.
     if ($NuGetApiKey) {
