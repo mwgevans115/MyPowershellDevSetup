@@ -38,6 +38,10 @@ $StopWatch = [ordered]@{
 # ------------------------------ Static Variables -----------------------------
 
 #
+# 'C:\Users\User\AppData\Local\Microsoft\Windows\PowerShell\PowerShellGet\'
+# 'https://dist.nuget.org/win-x86-commandline/latest/nuget.exe'
+
+
 Set-Variable -Name vscodeSettings -Option Constant -Description 'VS code settings file' -Scope Private `
     -Value @'
 {
@@ -84,6 +88,11 @@ Set-Variable -Name 'GitPath' -Option Constant -Description 'Git file Path' -Scop
     -Value (Join-Path -Path $env:ProgramFiles -ChildPath "git\cmd\git.exe")
 Set-Variable -Name 'PowershellArgs' -Option Constant -Description 'Arguments to start powershell with' -Scope Private `
     -Value @('-NoExit', '-ExecutionPolicy Bypass', '-NoProfile')
+Set-Variable -Name 'NugetPath' -Option Constant -Description 'Path to install NuGet.exe' -Scope Private `
+    -Value (Join-Path ([Environment]::GetFolderPath([Environment+SpecialFolder]::LocalApplicationData)) 'Microsoft\Windows\PowerShell\PowerShellGet\Nuget.exe' )
+Set-Variable -Name 'NugetURI' -Option Constant -Description 'Arguments to start powershell with' -Scope Private `
+    -Value [uri]'https://dist.nuget.org/win-x86-commandline/latest/nuget.exe'
+
 
 
 
@@ -111,6 +120,7 @@ $StopWatch.ScriptLogic = [System.Diagnostics.Stopwatch]::StartNew()
 #
 Install-PackageProvider -Name NuGet -Force -Scope CurrentUser
 Install-Module -Name PowerShellGet –Force -AllowClobber -Scope CurrentUser
+Invoke-WebRequest -UseBasicParsing -Uri $NugetURI -OutFile $NugetPath
 Install-Script Install-Git, Install-VSCode, Install-Hub -Force -Scope CurrentUser
 Start-Process powershell -ArgumentList ($PowershellArgs + '-Command Install-Git.ps1') -Verb RunAs
 Install-Module -Name Posh-Git -Force -Scope CurrentUser
