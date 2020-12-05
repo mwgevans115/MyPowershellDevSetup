@@ -1,19 +1,89 @@
 <#PSScriptInfo
-    .VERSION 0.1.0
-    .GUID 2c25b8e5-ced3-4615-b4b6-395245f8097b
-    .AUTHOR Mark Evans
-    .COMPANYNAME
-    .COPYRIGHT
-    .TAGS
-    .LICENSEURI
-    .PROJECTURI
-    .ICONURI
-    .EXTERNALMODULEDEPENDENCIES
-    .REQUIREDSCRIPTS
-    .EXTERNALSCRIPTDEPENDENCIES
-    .RELEASENOTES
-    .DESCRIPTION
-    Scipt for setting up powershell and vscode for development
+
+.VERSION 0.9.0
+
+.GUID 2c25b8e5-ced3-4615-b4b6-395245f8097b
+
+.AUTHOR Mark Evans
+
+.COMPANYNAME Contoso
+
+.COPYRIGHT
+
+.TAGS
+
+.LICENSEURI
+
+.PROJECTURI
+
+.ICONURI
+
+.EXTERNALMODULEDEPENDENCIES 
+
+.REQUIREDSCRIPTS
+
+.EXTERNALSCRIPTDEPENDENCIES
+
+.RELEASENOTES
+
+
+.PRIVATEDATA
+
+#> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<#
+
+.DESCRIPTION 
+Scipt for setting up powershell and vscode for development
+
 #>
 
 [cmdletbinding()]

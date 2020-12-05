@@ -115,6 +115,7 @@ Properties {
     # a path.  This parameter is passed through to Invoke-Pester's -OutputFormat parameter.
     [System.Diagnostics.CodeAnalysis.SuppressMessage('PSUseDeclaredVarsMoreThanAssigments', '')]
     $TestOutputFormat = "NUnitXml"
+
 }
 
 ###############################################################################

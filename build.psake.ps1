@@ -50,6 +50,7 @@
 # Dot source the user's customized properties and extension tasks.
 ###############################################################################
 . $PSScriptRoot\build.settings.ps1
+. $PSScriptRoot\build.tools.ps1
 
 ###############################################################################
 # Private properties.
@@ -80,6 +81,19 @@ Task Init -requiredVariables OutDir {
     }
 }
 
+Task BumpVersion -requiredVariables ScriptName, SrcRootDir {
+    Set-Variable -Name ScriptFile -Scope Private -Value (Join-Path $SrcRootDir "$ScriptName.ps1")
+    $ScriptInfo = Test-ScriptFileInfo -Path $ScriptFile
+    If ($Script:Bump){
+        $Bump = $Script:Bump
+    } else {
+        $Bump = 'Build'
+    }
+    $Version = (Step-Version $ScriptInfo.Version -By $Bump)
+    Update-ScriptFileInfo -Path $ScriptFile -Version $Version
+    Write-Verbose -Message "Version updated to $((Test-ScriptFileInfo -Path $ScriptFile).Version)"
+}
+
 Task Clean -depends Init -requiredVariables OutDir {
     if ($OutDir.Length -gt 3) {
         Get-ChildItem $OutDir | Remove-Item -Recurse -Force -Verbose:$VerbosePreference
@@ -103,7 +117,7 @@ Task CoreStageFiles -requiredVariables ScriptOutDir, SrcRootDir {
     Copy-Item -Path $SrcRootDir\* -Destination $ScriptOutDir -Recurse -Exclude $Exclude -Verbose:$VerbosePreference
 }
 
-Task Build -depends Init, Clean, BeforeBuild, StageFiles, Analyze, Sign, AfterBuild {
+Task Build -depends Init, Clean, BumpVersion, BeforeBuild, StageFiles, Analyze, Sign, AfterBuild {
 }
 
 Task Analyze -depends StageFiles `
@@ -274,10 +288,11 @@ Task Test -depends Build -requiredVariables TestRootDir, ScriptName, CodeCoverag
 Task Publish -depends Build, Test, BeforePublish, CorePublish, AfterPublish {
 }
 
-Task Release -depends Build, Test, BeforeRelease, CoreRelease, AfterRelease {
+Task Release -depends Build, Test, BeforeRelease, CoreRelease, AfterRelease -precondition {$Script:Bump='Minor'; $True} {
 }
 
 Task CoreRelease -requiredVariables ScriptOutDir {
+    $Script:Bump='Build'
     $ScriptFileName = Split-Path $ScriptOutDir -Leaf
     $Version = (Test-ScriptFileInfo -Path (Join-Path $ScriptOutDir "$ScriptFileName.ps1")).Version
     if ($Version) {
