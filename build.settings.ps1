@@ -152,3 +152,15 @@ Task BeforePublish {
 # Executes after the Publish task.
 Task AfterPublish {
 }
+
+###############################################################################
+# Customize these tasks for performing operations before and/or after Publish.
+###############################################################################
+
+# Executes before the Publish task.
+Task BeforeRelease {
+}
+
+# Executes after the Publish task.
+Task AfterRelease {
+}

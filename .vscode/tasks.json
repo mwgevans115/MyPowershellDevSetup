@@ -71,6 +71,16 @@
             ]
         },
         {
+            "taskName": "Release",
+            "suppressTaskName": true,
+            "showOutput": "always",
+            "args": [
+                "Write-Host 'Invoking psake on build.psake.ps1 -taskList Release'; Invoke-psake build.psake.ps1 -taskList Release;",
+                "Invoke-Command { Write-Host 'Completed Release task in task runner.' }"
+            ]
+        },
+
+        {
             "taskName": "Test",
             "suppressTaskName": true,
             "isTestCommand": true,
