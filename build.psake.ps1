@@ -55,8 +55,9 @@
 # Private properties.
 ###############################################################################
 Properties {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage('PSUseDeclaredVarsMoreThanAssigments', '')]
-    $ScriptOutDir = "$OutDir\$ScriptName"
+# Moved to build settings as build settings variable not available here
+#    [System.Diagnostics.CodeAnalysis.SuppressMessage('PSUseDeclaredVarsMoreThanAssigments', '')]
+#    $ScriptOutDir = "$OutDir\$ScriptName"
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage('PSUseDeclaredVarsMoreThanAssigments', '')]
     $SharedProperties = @{}

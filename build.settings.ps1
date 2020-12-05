@@ -19,6 +19,9 @@ Properties {
     [System.Diagnostics.CodeAnalysis.SuppressMessage('PSUseDeclaredVarsMoreThanAssigments', '')]
     $OutDir = "$PSScriptRoot\Release"
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage('PSUseDeclaredVarsMoreThanAssigments', '')]
+    $ScriptOutDir = "$OutDir\$ScriptName"
+
     # Items in the $Exclude array will not be copied to the $OutDir e.g. $Exclude = @('.gitattributes')
     # Typically you wouldn't put any file under the src dir unless the file was going to ship with
     # the script. However, if there are such files, add their $SrcRootDir relative paths to the exclude list.
