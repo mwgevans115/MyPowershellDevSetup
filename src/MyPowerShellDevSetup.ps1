@@ -18,7 +18,7 @@
 
 .ICONURI
 
-.EXTERNALMODULEDEPENDENCIES 
+.EXTERNALMODULEDEPENDENCIES
 
 .REQUIREDSCRIPTS
 
@@ -29,7 +29,7 @@
 
 .PRIVATEDATA
 
-#> 
+#>
 
 
 
@@ -81,7 +81,7 @@
 
 <#
 
-.DESCRIPTION 
+.DESCRIPTION
 Scipt for setting up powershell and vscode for development
 
 #>
