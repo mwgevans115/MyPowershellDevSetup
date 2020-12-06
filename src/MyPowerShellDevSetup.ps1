@@ -1,9 +1,10 @@
 <#PSScriptInfo
-.VERSION 1.0.0
+
+.VERSION 1.0
 
 .GUID 2c25b8e5-ced3-4615-b4b6-395245f8097b
 
-.AUTHOR Mark Evans
+.AUTHOR MarkEvans
 
 .COMPANYNAME
 
@@ -25,8 +26,14 @@
 
 .RELEASENOTES
 
+
+#>
+
+<#
+
 .DESCRIPTION
 Scipt for setting up powershell and vscode for development
+
 #>
 
 [cmdletbinding()]
