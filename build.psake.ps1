@@ -93,7 +93,7 @@ Task BumpVersion -requiredVariables ScriptName, SrcRootDir {
     Update-ScriptFileInfo -Path $ScriptFile -Version $Version
     Write-Verbose -Message "Version updated to $((Test-ScriptFileInfo -Path $ScriptFile).Version)"
     git add $ScriptFile
-    git commit -m "ScriptFileInfo Bump Versioni"
+    git commit -m "build:ScriptFileInfo Bump Version"
 }
 
 Task Clean -depends Init -requiredVariables OutDir {
